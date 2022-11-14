@@ -40,6 +40,12 @@ public class SecurityConfig {
 
         return http
                 .authorizeRequests()
+                .antMatchers("/user/**").hasRole("ADMIN")
+                .antMatchers("/project/**").hasRole("MANAGER")
+                .antMatchers("/task/employee/**").hasRole("EMPLOYEE")
+                .antMatchers("/task/**").hasRole("MANAGER")
+//                .antMatchers("/task/**").hasAnyRole("EMPLOYEE","ADMIN")
+//                .antMatchers("/task/**").hasAuthority("ROLE_EMPLOYEE")
                 .antMatchers(
                         "/",
                         "/login",
@@ -49,8 +55,12 @@ public class SecurityConfig {
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic()
+//                .httpBasic()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/welcome")
+                .failureUrl("/login?error=true")
+                .permitAll()
                 .and().build();
     }
-
 }
