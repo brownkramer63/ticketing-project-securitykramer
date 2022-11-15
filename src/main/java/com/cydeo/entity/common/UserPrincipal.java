@@ -21,14 +21,17 @@ public class UserPrincipal implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        GrantedAuthority authority = new SimpleGrantedAuthority((this.user.getRole().getDescription()));
+
+        GrantedAuthority authority = new SimpleGrantedAuthority(this.user.getRole().getDescription());
+
         authorityList.add(authority);
+
         return authorityList;
     }
 
     @Override
     public String getPassword() {
-        return this.user.getPassWord();
+        return this.user.getPassWord();   //how i can acccess to password field of the user object
     }
 
     @Override
@@ -55,4 +58,11 @@ public class UserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return this.user.isEnabled();
     }
+
+    public Long getId(){
+        return this.user.getId();
+    }
+
+
+
 }
